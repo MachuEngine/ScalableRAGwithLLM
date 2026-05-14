@@ -1,3 +1,6 @@
+from dotenv import load_dotenv
+load_dotenv()  # 반드시 다른 import보다 먼저 실행되어야 API 키가 적용됨
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 

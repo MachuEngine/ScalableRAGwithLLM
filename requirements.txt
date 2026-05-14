@@ -4,3 +4,9 @@ uvicorn[standard]
 pydantic
 langgraph
 dvc
+langchain-openai
+langchain-chroma
+chromadb
+chainlit
+python-dotenv
+httpx
