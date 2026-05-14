@@ -73,3 +73,10 @@ crash.*.log
 # Logs
 logs/
 *.log
+
+# Chainlit (auto-generated)
+.chainlit/
+chainlit.md
+
+# Vector DB (track with DVC instead)
+data/chroma_db/
