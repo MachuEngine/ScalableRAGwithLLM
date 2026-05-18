@@ -1,0 +1,27 @@
+# docker-compose.yml
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ..
+      dockerfile: src/backend/dockerfile
+    container_name: fastapi-backend
+    ports:
+      - "8000:8000"
+    env_file:
+      - ../.env
+    restart: always
+
+  frontend:
+    build: ./frontend
+    container_name: streamlit-frontend
+    ports:
+      - "8501:8501"
+    depends_on:
+      - backend
+    environment:
+      # 프론트엔드 코드(app.py)에서 백엔드 API를 호출할 때 사용할 주소
+      # 도커 컴포즈 내부에서는 서비스 이름(backend)이 곧 도메인이 됩니다.
+      - API_URL=http://backend:8000 
+    restart: always

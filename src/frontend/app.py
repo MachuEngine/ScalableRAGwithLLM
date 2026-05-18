@@ -3,7 +3,8 @@ import json
 import chainlit as cl
 import httpx
 
-BACKEND_URL = "http://localhost:8000/api/chat/stream"
+# BACKEND_URL = "http://localhost:8000/api/chat/stream"
+BACKEND_URL = "http://backend:8000/api/chat/stream"
 
 STEP_ICONS = {
     "retrieve": "검색",

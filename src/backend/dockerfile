@@ -1,0 +1,26 @@
+# ── Stage 1: builder ─────────────────────────────────────────────────────────
+FROM python:3.9-slim AS builder
+
+# chromadb has C++ extensions that require gcc/g++ at install time only
+RUN apt-get update && apt-get install -y --no-install-recommends gcc g++ \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+RUN python -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+# build context is project root; path must match
+COPY src/backend/requirements.txt requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
+
+# ── Stage 2: runtime ──────────────────────────────────────────────────────────
+FROM python:3.9-slim
+
+COPY --from=builder /opt/venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+WORKDIR /app
+COPY src/ src/
+
+CMD ["uvicorn", "src.backend.main:app", "--host", "0.0.0.0", "--port", "8000"]
